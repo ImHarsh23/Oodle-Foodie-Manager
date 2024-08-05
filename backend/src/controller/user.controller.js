@@ -101,8 +101,8 @@ export const postLogin = ErrorWrapper(async (req, res, next) => {
         await user.save();
         res
             .status(200)
-            .cookie("RefreshToken", refreshToken, { path: '/' }) // Set path for RefreshToken to all paths
-            .cookie("AccessToken", accessToken, { path: '/' }) // Set path for AccessToken to all paths
+            .cookie("RefreshToken", refreshToken, { path: '/', sameSite: 'None', secure: true })
+            .cookie("AccessToken", accessToken, { path: '/', sameSite: 'None', secure: true })
             .json({
                 success: true,
                 message: `Login ${user.username} Successfully`,
@@ -234,7 +234,7 @@ export const postME = ErrorWrapper(async (req, res, next) => {
                 message: "User found successfully",
                 user
             });
-    }, 4000)
+    }, 2000)
 })
 
 export const postUpdate = ErrorWrapper(async (req, res, next) => {
@@ -272,8 +272,8 @@ export const postUpdate = ErrorWrapper(async (req, res, next) => {
         await user.save();
         res
             .status(200)
-            .cookie("RefreshToken", refreshToken, { path: '/' }) // Set path for RefreshToken to all paths
-            .cookie("AccessToken", accessToken, { path: '/' }) // Set path for AccessToken to all paths
+            .cookie("RefreshToken", refreshToken, { path: '/', sameSite: 'None', httpOnly: false, secure: true }) // Set path for RefreshToken to all paths
+            .cookie("AccessToken", accessToken, { path: '/', sameSite: 'None', httpOnly: false, secure: true }) // Set path for AccessToken to all paths
             .json({
                 success: true,
                 message: `User ${user.username} updated successfully`

@@ -13,6 +13,10 @@ import NewFoodForm from "../NewFoodForm/NewFoodForm";
 import DeletePopUp from "../DeletePopUp/DeletePopUp";
 import UpdateFoodForm from "../UpdateFoodForm/UpdateFoodForm";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const CategoryEditInfo = () => {
   const navigate = useNavigate();
   const { name, category } = useParams();
@@ -25,16 +29,13 @@ const CategoryEditInfo = () => {
   const [deleteFoodId, setDeleteFoodId] = useState(null);
 
   const fetchFoodList = async () => {
-    let { data } = await axios.get(
-      "http://localhost:4444/restaurant/food-items",
-      {
-        params: {
-          restaurant_name: name,
-          category: category,
-        },
-        withCredentials: true,
-      }
-    );
+    let { data } = await api.get("/restaurant/food-items", {
+      params: {
+        restaurant_name: name,
+        category: category,
+      },
+      withCredentials: true,
+    });
     return data;
   };
 
@@ -50,8 +51,8 @@ const CategoryEditInfo = () => {
 
   const handleDeleteCategory = async () => {
     try {
-      let response = await axios.post(
-        "http://localhost:4444/restaurant/cuisine-category-remove",
+      let response = await api.post(
+        "/restaurant/cuisine-category-remove",
         { category, restaurant_name: name },
         { withCredentials: true }
       );
@@ -70,8 +71,8 @@ const CategoryEditInfo = () => {
 
   const handleDeleteFood = async () => {
     try {
-      let response = await axios.get(
-        `http://localhost:4444/restaurant/delete-food-item/${deleteFoodId}`,
+      let response = await api.get(
+        `/restaurant/delete-food-item/${deleteFoodId}`,
         {
           params: {
             restaurant_name: name,

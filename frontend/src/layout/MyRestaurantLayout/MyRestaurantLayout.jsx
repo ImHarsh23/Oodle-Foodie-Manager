@@ -6,6 +6,10 @@ import toast from "react-hot-toast";
 import MyRestaurantCard from "../../components/MyRestaurantCard/MyRestaurantCard";
 import { Button } from "@material-tailwind/react";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const MyRestaurantLayout = () => {
   const [restaurants, setRestaurants] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,10 +25,9 @@ const MyRestaurantLayout = () => {
   const handleDelete = async () => {
     const toastId = toast.loading("Processing request");
     try {
-      let { data } = await axios.get(
-        `http://localhost:4444/restaurant/delete/${deleteId}`,
-        { withCredentials: true }
-      );
+      let { data } = await api.get(`/restaurant/delete/${deleteId}`, {
+        withCredentials: true,
+      });
       toast.success(data.message, { id: toastId });
     } catch (error) {
       toast.error(error.response.data.message, { id: toastId });
@@ -33,10 +36,9 @@ const MyRestaurantLayout = () => {
   };
 
   const restaurantsList = async () => {
-    let { data } = await axios.get(
-      `http://localhost:4444/restaurant/user/${id}`,
-      { withCredentials: true }
-    );
+    let { data } = await api.get(`/restaurant/user/${id}`, {
+      withCredentials: true,
+    });
     return data;
   };
 

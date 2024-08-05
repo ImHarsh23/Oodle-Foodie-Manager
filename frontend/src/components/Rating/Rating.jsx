@@ -7,6 +7,10 @@ import { useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const Rating = () => {
   const [writeReview, setWriteReview] = useState(false);
   const [reviews, setReviews] = useState(null);
@@ -22,10 +26,9 @@ const Rating = () => {
 
   const getReview = async () => {
     try {
-      let { data } = await axios.get(
-        `http://localhost:4444/restaurant/get-review/${name}`,
-        { withCredentials: true }
-      );
+      let { data } = await api.get(`/restaurant/get-review/${name}`, {
+        withCredentials: true,
+      });
       setReviews(data.reviews);
     } catch (error) {
       toast.error("Unable to fetch restaurant reviews right now");
@@ -46,16 +49,12 @@ const Rating = () => {
     formData.append("message", reviewData.message);
     let toastId = toast.loading("Posting Review");
     try {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant/add-review",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.post("/restaurant/add-review", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
       toast.success(data.message, { id: toastId });
       setWriteReview(false);
       getReview();

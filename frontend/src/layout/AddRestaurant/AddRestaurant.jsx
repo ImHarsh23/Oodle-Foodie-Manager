@@ -5,6 +5,10 @@ import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { indianStates } from "../../utils/constants";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const AddRestaurant = () => {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -25,8 +29,8 @@ const AddRestaurant = () => {
     e.preventDefault();
     const toastId = toast.loading("Submitting form...");
     try {
-      let response = await axios.post(
-        "http://localhost:4444/restaurant/add",
+      let response = await api.post(
+        "/restaurant/add",
         {
           name: restaurantInfo.name,
           contact: restaurantInfo.contact,

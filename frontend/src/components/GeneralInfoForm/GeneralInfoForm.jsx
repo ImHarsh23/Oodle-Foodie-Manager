@@ -6,6 +6,10 @@ import { Button } from "@material-tailwind/react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const GeneralInfoForm = () => {
   const navigate = useNavigate();
   const { name } = useParams();
@@ -14,8 +18,8 @@ const GeneralInfoForm = () => {
 
   useEffect(() => {
     async function getRestaurantDetails() {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant",
+      let { data } = await api.post(
+        "/restaurant",
         { name },
         { withCredentials: true }
       );
@@ -37,8 +41,8 @@ const GeneralInfoForm = () => {
     const toastId = toast.loading("Updating details");
     e.preventDefault();
     try {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant/restaurant-update",
+      let { data } = await api.post(
+        "/restaurant/restaurant-update",
         restaurantData,
         {
           headers: {

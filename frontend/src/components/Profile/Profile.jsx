@@ -5,6 +5,10 @@ import toast from "react-hot-toast";
 import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const alternateProfileImabge =
   "https://as2.ftcdn.net/v2/jpg/07/95/95/13/1000_F_795951374_QR1tADRPLjbh0NqrJqLPbzOTHJW5HjmY.jpg";
 
@@ -40,16 +44,12 @@ const Profile = () => {
   const submitHandler = async () => {
     const toastId = toast.loading("Updating...");
     try {
-      let response = await axios.post(
-        "http://localhost:4444/user/update",
-        userData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+      let response = await api.post("/user/update", userData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
       toast.success(response.data.message, { id: toastId });
       setIsEditable(false);
     } catch (error) {

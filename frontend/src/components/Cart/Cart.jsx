@@ -4,6 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCart, setIsCartOpen } from "../../Redux/Action/Action";
 import { useEffect } from "react";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const Cart = () => {
   const dispatch = useDispatch();
   const { isCartOpen, cartDetail, isLoggedIn } = useSelector(
@@ -16,12 +20,9 @@ const Cart = () => {
 
   const handleRemoveItem = async (item) => {
     try {
-      let { data } = await axios.get(
-        `http://localhost:4444/user/cart/remove/${item._id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.get(`/user/cart/remove/${item._id}`, {
+        withCredentials: true,
+      });
       if (isLoggedIn) dispatch(fetchCart());
     } catch (error) {
       toast.error(error.response.data.message);
@@ -35,12 +36,9 @@ const Cart = () => {
     const toastId = toast.loading("processing order");
     e.preventDefault();
     try {
-      let { data } = await axios.get(
-        "http://localhost:4444/user/cart/order/place",
-        {
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.get("/user/cart/order/place", {
+        withCredentials: true,
+      });
       dispatch(fetchCart());
       toast.success(data.message, { id: toastId });
     } catch (error) {

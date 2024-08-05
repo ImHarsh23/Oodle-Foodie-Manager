@@ -4,6 +4,10 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const UpdateFoodForm = ({ setpopUpUpdateFood, id }) => {
   const { name, category } = useParams();
   const refe = useRef();
@@ -24,16 +28,12 @@ const UpdateFoodForm = ({ setpopUpUpdateFood, id }) => {
     e.preventDefault();
     const toastId = toast.loading("Processing");
     try {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant/update-food-item",
-        foodData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.post("/restaurant/update-food-item", foodData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
       toast.success(data.message, { id: toastId });
       setpopUpUpdateFood(false);
     } catch (error) {
@@ -43,16 +43,13 @@ const UpdateFoodForm = ({ setpopUpUpdateFood, id }) => {
 
   const fetchFoodData = async () => {
     try {
-      let { data } = await axios.get(
-        `http://localhost:4444/restaurant/food-item/${id}`,
-        {
-          params: {
-            restaurant_name: name,
-            category: category,
-          },
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.get(`/restaurant/food-item/${id}`, {
+        params: {
+          restaurant_name: name,
+          category: category,
+        },
+        withCredentials: true,
+      });
       setfoodData({
         ...data.data,
         food_image: data.data.image[0].url,

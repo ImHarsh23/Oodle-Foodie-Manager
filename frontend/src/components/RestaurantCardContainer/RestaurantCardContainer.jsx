@@ -5,6 +5,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useDebounce from "../../customHooks/useDebounce";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const RestaurantCardContainer = ({ setCallback }) => {
   const [restaurantsList, setRestaurantsList] = useState(null);
   const searchDebounce = useDebounce();
@@ -34,7 +38,7 @@ const RestaurantCardContainer = ({ setCallback }) => {
   }
 
   async function fetchData() {
-    let response = await axios.get("http://localhost:4444/list/restaurants");
+    let response = await api.get("/list/restaurants");
     return response.data;
   }
 
@@ -45,7 +49,7 @@ const RestaurantCardContainer = ({ setCallback }) => {
 
   const searchReastaurantList = async (key) => {
     try {
-      const { data } = await axios.get(`http://localhost:4444/list/search`, {
+      const { data } = await api.get(`/list/search`, {
         params: {
           keyword: key,
         },

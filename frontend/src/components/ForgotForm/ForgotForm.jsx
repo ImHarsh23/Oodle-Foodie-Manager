@@ -4,6 +4,10 @@ import toast from "react-hot-toast";
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const ForgotForm = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -12,10 +16,7 @@ const ForgotForm = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(
-        "http://localhost:4444/user/forgot-password",
-        { email }
-      );
+      const { data } = await api.post("/user/forgot-password", { email });
       setLoading(false);
       setEmail("");
       toast.success(data.message);

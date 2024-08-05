@@ -7,6 +7,10 @@ import { Button } from "@material-tailwind/react";
 import isoToReadableDate from "../../utils/isoToReadableDate";
 import { useSelector } from "react-redux";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const ReviewCard = ({ review, getReview }) => {
   const { auth } = useSelector((state) => state.auth);
   const [openReviewDelete, setOpenReviewDelete] = useState(false);
@@ -27,8 +31,8 @@ const ReviewCard = ({ review, getReview }) => {
 
   const deleteReview = async (reviewId) => {
     try {
-      let response = await axios.post(
-        `http://localhost:4444/restaurant/delete-review/${reviewId}`,
+      let response = await api.post(
+        `/restaurant/delete-review/${reviewId}`,
         { restaurant_name: name },
         { withCredentials: true }
       );
@@ -46,8 +50,8 @@ const ReviewCard = ({ review, getReview }) => {
 
   const updateReview = async () => {
     try {
-      let response = await axios.post(
-        `http://localhost:4444/restaurant/update-review/${review._id}`,
+      let response = await api.post(
+        `/restaurant/update-review/${review._id}`,
         { message: updatedMessage, restaurant_name: name, rating: starRating },
         { withCredentials: true }
       );

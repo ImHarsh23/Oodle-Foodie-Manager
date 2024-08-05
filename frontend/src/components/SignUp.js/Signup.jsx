@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const Signup = () => {
   const [registrationInfo, setRegistrationInfo] = useState({
     name: "",
@@ -17,10 +21,7 @@ const Signup = () => {
     const toastId = toast.loading("Creating Account");
     e.preventDefault();
     try {
-      let response = await axios.post(
-        "http://localhost:4444/user/signup",
-        registrationInfo
-      );
+      let response = await api.post("/user/signup", registrationInfo);
       toast.success(response.data.message, { id: toastId });
     } catch (error) {
       toast.success(error.response.data.message, { id: toastId });

@@ -3,6 +3,10 @@ import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const NewFoodForm = ({ setpopUpNewFood }) => {
   const param = useParams();
   const refe = useRef();
@@ -29,16 +33,12 @@ const NewFoodForm = ({ setpopUpNewFood }) => {
     e.preventDefault();
     const toastId = toast.loading("Processing");
     try {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant/add-food-item",
-        foodData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.post("/restaurant/add-food-item", foodData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
       toast.success(data.message, { id: toastId });
       setpopUpNewFood(false);
     } catch (error) {

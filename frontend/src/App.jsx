@@ -43,9 +43,10 @@ const App = () => {
   const { Rloading } = useSelector((state) => state.auth);
   const [cookies] = useCookies();
 
+  console.log(document.cookie);
+
   useEffect(() => {
     const token = cookies.RefreshToken;
-
     if (token) {
       dispatch(fetchUserData());
     } else {

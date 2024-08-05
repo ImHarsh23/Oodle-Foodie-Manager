@@ -6,6 +6,10 @@ import { Chip } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 import { cuisines } from "../../utils/constants";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const CusineInfoForm = () => {
   const [cusines, setCusines] = useState(null);
   const { name } = useParams();
@@ -18,8 +22,8 @@ const CusineInfoForm = () => {
 
   const AddCategoryHandler = async () => {
     try {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant/cuisine-category-add",
+      let { data } = await api.post(
+        "/restaurant/cuisine-category-add",
         { category: newCategory, restaurant_name: name },
         { withCredentials: true }
       );
@@ -32,12 +36,9 @@ const CusineInfoForm = () => {
 
   useEffect(() => {
     const fetchCusines = async () => {
-      let { data } = await axios.get(
-        `http://localhost:4444/restaurant//all-cuisines/${name}`,
-        {
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.get(`/restaurant/all-cuisines/${name}`, {
+        withCredentials: true,
+      });
       setCusines(data.data);
     };
     try {

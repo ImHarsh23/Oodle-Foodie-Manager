@@ -13,6 +13,10 @@ import toast from "react-hot-toast";
 import { fetchCart } from "../../Redux/Action/Action";
 import { useDispatch } from "react-redux";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 function Icon({ id, open }) {
   return (
     <svg
@@ -50,8 +54,8 @@ const RestaurantLayout = () => {
 
   const AddToCart = async (category, foodId) => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:4444/user/cart/add",
+      const { data } = await api.post(
+        "/user/cart/add",
         {
           Restaurant_id: restaurantData._id,
           category,
@@ -68,8 +72,8 @@ const RestaurantLayout = () => {
 
   useEffect(() => {
     async function getRestaurantDetails() {
-      let { data } = await axios.post(
-        "http://localhost:4444/restaurant",
+      let { data } = await api.post(
+        "/restaurant",
         { name },
         { withCredentials: true }
       );

@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
+const api = axios.create({
+    baseURL: 'https://oodle.onrender.com'
+});
+
 // Action Types
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -19,8 +23,8 @@ export const login = (formInfo) => async (dispatch) => {
     const toastId = toast.loading("Please wait logging in");
     dispatch({ type: LOGIN_REQUEST });
     try {
-        const { data } = await axios.post(
-            "http://localhost:4444/user/login",
+        const { data } = await api.post(
+            "/user/login",
             formInfo,
             { withCredentials: true }
         );
@@ -39,7 +43,7 @@ export const logout = () => (dispatch) => {
 export const fetchUserData = () => async (dispatch) => {
     dispatch({ type: FETCH_USER_REQUEST });
     try {
-        const { data } = await axios.post("http://localhost:4444/user/me", {}, { withCredentials: true });
+        const { data } = await api.post("/user/me", {}, { withCredentials: true });
         dispatch({ type: FETCH_USER_SUCCESS, payload: data.user });
     } catch (error) {
         toast.error(error.response.data.message);
@@ -49,7 +53,7 @@ export const fetchUserData = () => async (dispatch) => {
 
 export const fetchCart = () => async (dispatch) => {
     try {
-        const { data } = await axios.get("http://localhost:4444/user/cart", { withCredentials: true });
+        const { data } = await api.get("/user/cart", { withCredentials: true });
         dispatch({ type: FETCH_CART_SUCCESS, payload: data.cart });
     } catch (error) {
         toast.error(error.response.data.message);

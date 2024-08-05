@@ -6,6 +6,10 @@ import isoToReadableDate from "../../utils/isoToReadableDate";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsCartOpen } from "../../Redux/Action/Action";
 
+const api = axios.create({
+  baseURL: "https://oodle.onrender.com",
+});
+
 const OrderHistory = () => {
   const dispatch = useDispatch();
   const { cartDetail } = useSelector((state) => state.auth);
@@ -21,8 +25,8 @@ const OrderHistory = () => {
 
   const BuyAgain = async (items) => {
     try {
-      let { data } = await axios.post(
-        `http://localhost:4444/user/ordersHistory/buy`,
+      let { data } = await api.post(
+        `/user/ordersHistory/buy`,
         { items },
         {
           withCredentials: true,
@@ -36,12 +40,9 @@ const OrderHistory = () => {
 
   const fetchOrderHistory = async () => {
     try {
-      let { data } = await axios.get(
-        `http://localhost:4444/user/ordersHistory`,
-        {
-          withCredentials: true,
-        }
-      );
+      let { data } = await api.get(`/user/ordersHistory`, {
+        withCredentials: true,
+      });
       setHistory(data.history);
     } catch (error) {
       toast.error(error.response.data.message);
