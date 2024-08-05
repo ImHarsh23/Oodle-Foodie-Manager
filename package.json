@@ -1,0 +1,16 @@
+{
+  "name": "oodle",
+  "version": "1.0.0",
+  "description": "The Oodle project is a MERN (MongoDB, Express, React, Node.js) stack application designed for managing restaurant data. It includes user authentication and secure endpoints for restaurant management. The backend uses JWT for security, with features like file uploads via Cloudinary and email notifications through Nodemailer. The frontend is built with React, Redux for state management, and Material Tailwind for styling.",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "cd backend && npm install",
+    "start-server": "cd backend && npm start",
+    "install-client": "cd frontend && npm install",
+    "build-client": "cd frontend && npm run build",
+    "start-client": "cd frontend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
