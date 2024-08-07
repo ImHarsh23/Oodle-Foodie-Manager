@@ -31,9 +31,9 @@ const Navbar = () => {
         document.body.scrollTop != 0 ||
         document.documentElement.scrollTop != 0
       )
-        window.scrollBy(0, -10);
+        window.scrollBy(0, -40);
       else clearInterval(timerHandle);
-    }, 0);
+    }, 5);
   }
 
   const turnOpenNavOff = () => {
@@ -47,10 +47,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="bg-[#0A1D56] p-2 lg:px-4 flex justify-between md:justify-start lg:justify-between items-center md:place-items-end lg:items-center md:flex-col lg:flex-row md:max-h-screen sm:sticky top-0 z-[51] md:gap-10 md:h-screen lg:h-auto lg:rounded-full lg:mt-3">
-      <div id="left-nav" className="w-24 md:w-32 overflow-hidden">
-        <img src={logo} alt="Logo" className="" />
-      </div>
+    <div className="bg-[#0A1D56] p-2 lg:px-4 flex justify-between md:justify-start lg:justify-between items-center md:place-items-end lg:items-center md:flex-col lg:flex-row md:max-h-screen sticky top-0 z-[51] md:gap-10 md:h-screen lg:h-auto lg:rounded-full lg:mt-3">
+      <Link to={"/"}>
+        <div id="left-nav" className="w-24 md:w-32 overflow-hidden">
+          <img src={logo} alt="Logo" className="" />
+        </div>
+      </Link>
       <i
         onClick={() => {
           setOpenNav(!openNav);

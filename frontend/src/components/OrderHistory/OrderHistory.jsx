@@ -54,7 +54,7 @@ const OrderHistory = () => {
   }, [cartDetail]);
 
   return (
-    <section className="py-8 relative bg-white rounded-3xl my-6 md:my-10">
+    <section className="py-8 relative bg-white rounded-3xl my-6 md:my-10 w-full">
       <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
         <h2 className="font-manrope font-extrabold text-lg md:text-xl lg:text-2xl leading-7 md:leading-8 lg:leading-10 text-black mb-6 md:mb-9">
           Order History

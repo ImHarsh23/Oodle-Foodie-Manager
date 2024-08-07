@@ -1,5 +1,5 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { Suspense, useEffect } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ const NotFound = React.lazy(() => import("./components/NotFound/NotFound"));
 
 const App = () => {
   const dispatch = useDispatch();
-  const { Rloading } = useSelector((state) => state.auth);
+  const { Rloading, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const token = localStorage.getItem("RefreshToken") || null;
@@ -61,27 +61,58 @@ const App = () => {
         <Cart />
         <div className="max-w-6xl mx-auto md:flex lg:block">
           <Navbar />
-          {/* <StickyNavbar /> */}
           <Routes>
             <Route path="/" element={<Hero />}>
               <Route path="search" element={<Search />} />
             </Route>
-            <Route path="/user/login" element={<Login />} />
-            <Route path="/user/signup" element={<Signup />} />
-            <Route path="/user/forgot-password" element={<ForgotLayout />} />
-            <Route path="/restaurant/:name" element={<RestaurantLayout />} />
-            <Route path="/restaurant/add" element={<AddRestaurant />} />
-            <Route path="/restaurant/:name/edit" element={<EditRestaurant />} />
+            <Route
+              path="/user/login"
+              element={isLoggedIn ? <Navigate to={"/"} /> : <Login />}
+            />
+            <Route
+              path="/user/signup"
+              element={isLoggedIn ? <Navigate to={"/"} /> : <Signup />}
+            />
+            <Route
+              path="/user/forgot-password"
+              element={isLoggedIn ? <Navigate to={"/"} /> : <ForgotLayout />}
+            />
+            <Route
+              path="/restaurant/:name"
+              element={
+                !isLoggedIn ? <Navigate to={"/"} /> : <RestaurantLayout />
+              }
+            />
+            <Route
+              path="/restaurant/add"
+              element={!isLoggedIn ? <Navigate to={"/"} /> : <AddRestaurant />}
+            />
+            <Route
+              path="/restaurant/:name/edit"
+              element={!isLoggedIn ? <Navigate to={"/"} /> : <EditRestaurant />}
+            />
             <Route
               path="/restaurant/:name/edit/:category"
-              element={<EditCategory />}
+              element={!isLoggedIn ? <Navigate to={"/"} /> : <EditCategory />}
             />
             <Route
               path="/restaurants/user/:id"
-              element={<MyRestaurantLayout />}
+              element={
+                !isLoggedIn ? <Navigate to={"/"} /> : <MyRestaurantLayout />
+              }
             />
-            <Route path="/profile" element={<MyProfileLayout />} />
-            <Route path="/user/history" element={<OrderHistoryLayout />} />
+            <Route
+              path="/profile"
+              element={
+                !isLoggedIn ? <Navigate to={"/"} /> : <MyProfileLayout />
+              }
+            />
+            <Route
+              path="/user/history"
+              element={
+                !isLoggedIn ? <Navigate to={"/"} /> : <OrderHistoryLayout />
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

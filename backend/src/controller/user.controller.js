@@ -106,7 +106,8 @@ export const postLogin = ErrorWrapper(async (req, res, next) => {
             .json({
                 success: true,
                 message: `Login ${user.username} Successfully`,
-                user
+                user,
+                refreshToken
             });
     } catch (error) {
         throw new ErrorHandler(500, error.message);
@@ -226,15 +227,13 @@ export const postME = ErrorWrapper(async (req, res, next) => {
         throw new ErrorHandler(401, "Invalid User");
     }
 
-    setTimeout(() => {
-        res
-            .status(201)
-            .json({
-                success: true,
-                message: "User found successfully",
-                user
-            });
-    }, 2000)
+    res
+        .status(201)
+        .json({
+            success: true,
+            message: "User found successfully",
+            user
+        })
 })
 
 export const postUpdate = ErrorWrapper(async (req, res, next) => {

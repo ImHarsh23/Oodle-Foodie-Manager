@@ -30,6 +30,7 @@ const ReviewCard = ({ review, getReview }) => {
   };
 
   const deleteReview = async (reviewId) => {
+    const id = toast.loading("Deleting your review");
     try {
       let response = await api.post(
         `/restaurant/delete-review/${reviewId}`,
@@ -37,9 +38,9 @@ const ReviewCard = ({ review, getReview }) => {
         { withCredentials: true }
       );
       await getReview();
-      toast.success(response.data.message);
+      toast.success(response.data.message, { id });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.message, { id });
     }
   };
 
@@ -49,6 +50,7 @@ const ReviewCard = ({ review, getReview }) => {
   };
 
   const updateReview = async () => {
+    const id = toast.loading("Updating your review");
     try {
       let response = await api.post(
         `/restaurant/update-review/${review._id}`,
@@ -57,9 +59,9 @@ const ReviewCard = ({ review, getReview }) => {
       );
       setUpdatable(false);
       await getReview();
-      toast.success(response.data.message);
+      toast.success(response.data.message, { id });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.message, { id });
     }
   };
 
