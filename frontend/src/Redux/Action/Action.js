@@ -29,6 +29,7 @@ export const login = (formInfo) => async (dispatch) => {
             { withCredentials: true }
         );
         toast.success(data.message, { id: toastId });
+        localStorage.setItem("RefreshToken", data.refreshToken);
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     } catch (error) {
         toast.error(error?.response?.data?.message, { id: toastId });
@@ -36,7 +37,17 @@ export const login = (formInfo) => async (dispatch) => {
     }
 };
 
-export const logout = () => (dispatch) => {
+export const logout = () => async (dispatch) => {
+    try {
+        const { data } = await api.get(
+            "/user/logout",
+            { withCredentials: true }
+        );
+        toast.success(data.message);
+    } catch (error) {
+        toast.error("Something Went Wrong");
+    }
+    localStorage.removeItem("RefreshToken");
     dispatch({ type: LOGOUT });
 };
 

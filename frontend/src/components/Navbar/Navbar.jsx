@@ -9,13 +9,11 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, fetchCart, setIsCartOpen } from "../../Redux/Action/Action";
-import { useCookies } from "react-cookie";
 import { alternateProfileImage, logo } from "../../utils/constants";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, auth, cartCount } = useSelector((state) => state.auth);
-  const [cookies, setCookie, removeCookie] = useCookies();
   const [openNav, setOpenNav] = useState(false);
   const [isProfile, setIsProfile] = useState(false);
   const navigate = useNavigate();
@@ -23,7 +21,6 @@ const Navbar = () => {
   const logoutClickHandler = async (e) => {
     e.preventDefault();
     setIsProfile(false);
-    removeCookie("RefreshToken", { path: "/" });
     dispatch(logout());
     navigate("/");
   };

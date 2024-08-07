@@ -1,10 +1,9 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserData, setLoading } from "./Redux/Action/Action";
-import { useCookies } from "react-cookie";
 import FullPageLoading from "./components/FullPageLoading/FullPageLoading";
 
 const Hero = React.lazy(() => import("./layout/Hero/Hero"));
@@ -41,18 +40,15 @@ const NotFound = React.lazy(() => import("./components/NotFound/NotFound"));
 const App = () => {
   const dispatch = useDispatch();
   const { Rloading } = useSelector((state) => state.auth);
-  const [cookies] = useCookies();
-
-  console.log(document.cookie);
 
   useEffect(() => {
-    const token = cookies.RefreshToken;
+    const token = localStorage.getItem("RefreshToken") || null;
     if (token) {
       dispatch(fetchUserData());
     } else {
       dispatch(setLoading(false));
     }
-  }, [cookies.RefreshToken]);
+  }, []);
 
   if (Rloading) {
     return <FullPageLoading />;
