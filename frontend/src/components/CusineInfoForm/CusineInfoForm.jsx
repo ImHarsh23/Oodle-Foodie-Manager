@@ -54,7 +54,7 @@ const CusineInfoForm = () => {
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
           Cusine Information
         </h2>
-        <div className="mt-5 flex gap-2">
+        <div className="mt-5 flex gap-2 flex-wrap">
           {cusines &&
             cusines.map((item) => (
               <Link

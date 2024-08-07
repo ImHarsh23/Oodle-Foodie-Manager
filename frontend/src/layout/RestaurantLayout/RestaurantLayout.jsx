@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
+import { Spinner } from "@material-tailwind/react";
 import axios from "axios";
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Button,
 } from "@material-tailwind/react";
 import Rating from "../../components/Rating/Rating";
 import toast from "react-hot-toast";
 import { fetchCart } from "../../Redux/Action/Action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const api = axios.create({
   baseURL: "https://oodle.onrender.com",
@@ -41,6 +41,7 @@ function Icon({ id, open }) {
 const RestaurantLayout = () => {
   const dispatch = useDispatch();
   const [restaurantData, setRestaurantData] = useState(null);
+  const [addtoCartBtnLoading, setAddtoCartBtnLoading] = useState(null);
   const [open, setOpen] = useState([1]); // Default to opening the first Accordion
   const { name } = useParams();
 
@@ -54,6 +55,7 @@ const RestaurantLayout = () => {
 
   const AddToCart = async (category, foodId) => {
     try {
+      setAddtoCartBtnLoading(foodId);
       const { data } = await api.post(
         "/user/cart/add",
         {
@@ -63,6 +65,7 @@ const RestaurantLayout = () => {
         },
         { withCredentials: true }
       );
+      setAddtoCartBtnLoading(null);
       dispatch(fetchCart());
       toast.success(data.message);
     } catch (error) {
@@ -86,7 +89,11 @@ const RestaurantLayout = () => {
   }, [name]);
 
   if (!restaurantData) {
-    return <Loading />;
+    return (
+      <div className=" flex justify-center mt-20 w-full">
+        <Loading />
+      </div>
+    );
   }
 
   return (
@@ -147,13 +154,20 @@ const RestaurantLayout = () => {
                         alt=""
                       />
                     </div>
-                    <button
-                      onClick={() => AddToCart(category.category, food._id)}
-                      className="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-2 px-4 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                      type="button"
-                    >
-                      Add to cart
-                    </button>
+                    <div className="flex flex-nowrap items-center gap-2">
+                      <button
+                        onClick={() => AddToCart(category.category, food._id)}
+                        className="align-middle select-none font-sans font-bold text-center uppercase transition-all duration-500 text-xs py-2 px-4 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                        type="button"
+                      >
+                        Add to cart
+                      </button>
+                      <div className="h-5 w-5">
+                        {addtoCartBtnLoading === food._id && (
+                          <Spinner className="h-4 w-4" />
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
