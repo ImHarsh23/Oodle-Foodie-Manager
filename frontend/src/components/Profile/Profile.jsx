@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
+  baseURL: "https://oodle-foodie-manager-com7.vercel.app",
 });
 
 const alternateProfileImabge =

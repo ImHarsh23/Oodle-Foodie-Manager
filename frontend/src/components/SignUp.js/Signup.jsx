@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
+  baseURL: "https://oodle-foodie-manager-com7.vercel.app",
 });
 
 const Signup = () => {

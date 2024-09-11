@@ -7,7 +7,7 @@ import { Select, Option } from "@material-tailwind/react";
 import { cuisines } from "../../utils/constants";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app/",
+  baseURL: "https://oodle-foodie-manager-com7.vercel.app",
 });
 
 const CusineInfoForm = () => {

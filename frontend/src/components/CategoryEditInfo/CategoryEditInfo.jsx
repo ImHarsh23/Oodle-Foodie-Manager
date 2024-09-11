@@ -14,7 +14,7 @@ import DeletePopUp from "../DeletePopUp/DeletePopUp";
 import UpdateFoodForm from "../UpdateFoodForm/UpdateFoodForm";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
+  baseURL: "https://oodle-foodie-manager-com7.vercel.app",
 });
 
 const CategoryEditInfo = () => {

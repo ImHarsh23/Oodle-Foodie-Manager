@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { indianStates } from "../../utils/constants";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
+  baseURL: "https://oodle-foodie-manager-com7.vercel.app",
 });
 
 const AddRestaurant = () => {

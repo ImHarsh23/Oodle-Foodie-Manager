@@ -14,7 +14,7 @@ import { fetchCart } from "../../Redux/Action/Action";
 import { useDispatch, useSelector } from "react-redux";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
+  baseURL:"https://oodle-foodie-manager-com7.vercel.app",
 });
 
 function Icon({ id, open }) {

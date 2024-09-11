@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import useDebounce from "../../customHooks/useDebounce";
 
 const api = axios.create({
-  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
+  baseURL: "https://oodle-foodie-manager-com7.vercel.app",
 });
 
 const RestaurantCardContainer = ({ setCallback }) => {
