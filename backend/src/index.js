@@ -12,7 +12,7 @@ const Port = process.env.Port;
 
 app.set('view engine', 'hbs');
 app.use(cors({
-    origin: JSON.parse(process.env.CORS_ORIGINS),
+    origin: process.env.CORS_ORIGINS,
     methods: ["GET", "POST"],
     credentials: true
 }));
