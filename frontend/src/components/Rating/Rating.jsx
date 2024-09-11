@@ -8,7 +8,7 @@ import Loading from "../Loading/Loading";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
 const api = axios.create({
-  baseURL: "https://oodle.onrender.com",
+  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
 });
 
 const Rating = () => {

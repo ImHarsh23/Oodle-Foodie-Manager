@@ -5,7 +5,7 @@ import { fetchCart, setIsCartOpen } from "../../Redux/Action/Action";
 import { useEffect } from "react";
 
 const api = axios.create({
-  baseURL: "https://oodle.onrender.com",
+  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
 });
 
 const Cart = () => {

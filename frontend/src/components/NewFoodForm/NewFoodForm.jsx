@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: "https://oodle.onrender.com",
+  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
 });
 
 const NewFoodForm = ({ setpopUpNewFood }) => {

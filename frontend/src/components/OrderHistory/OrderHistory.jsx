@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsCartOpen } from "../../Redux/Action/Action";
 
 const api = axios.create({
-  baseURL: "https://oodle.onrender.com",
+  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
 });
 
 const OrderHistory = () => {

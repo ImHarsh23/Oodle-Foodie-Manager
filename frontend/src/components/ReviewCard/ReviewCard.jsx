@@ -8,7 +8,7 @@ import isoToReadableDate from "../../utils/isoToReadableDate";
 import { useSelector } from "react-redux";
 
 const api = axios.create({
-  baseURL: "https://oodle.onrender.com",
+  baseURL: "https://oodle-foodie-manager-l366.vercel.app",
 });
 
 const ReviewCard = ({ review, getReview }) => {
